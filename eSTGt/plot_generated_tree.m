@@ -22,9 +22,23 @@ end
 list = [[1 1 1];colorsOrder(inds,:);[0 0 0]];
 colors = mat2cell(list,ones(1,size(list,1)),size(list,2))';
 tHand = tree_plot(tr,colors,0,'BranchLabels','false','group',group_names,'display_branch_labels',0,'ORIENTATION','bottom','TERMINALLABELS','false');
-hLegend  = legend(list_group_names);
+
+% old
+% hLegend  = legend(list_group_names);
+
+% get a handle to the legend as well as icons
+[hLegend, hIcons, ~, ~] = legend(list_group_names);
+
+% find the lines from the legend icons
+hl = findobj(hIcons, 'Type', 'Line');
+set(hl,'LineWidth',3); % set the line width to 3
+% fix the line color so that it matches with the color used in tree
+for i=1:length(list)-1
+    set(hl(i*2-1), 'Color', list(i+1,:));
+end
+
 set(hLegend,'FontSize',8);
-hKids = get(hLegend,'Children'); 
+hKids = get(hLegend,'Children');
 indsT = strcmp(get(hKids,'Type'),'text');
 hText = hKids(indsT);
 set(hText,{'Color'},colors(length(list_group_names)+1:-1:2)');
