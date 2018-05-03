@@ -15,7 +15,10 @@ R(1)     = 0;
 Id(1,:)     = [0 0];
 X(1,:)   = InitialPopulation;
 Rules.Propensities = X(1,Rules.IndsRep).*Rules.Rates;
+
+% number of populations
 exe_counter = 1;
+
 startTime = tic;
 Nodes = cell(length(Rules.AllNames),1);
 % Create the tree structure
@@ -87,6 +90,14 @@ while (T(exe_counter) < TimeSpan(2))
     LiveNodes(exe_counter,:) = livenodes;
     
     % updating the rules rates and probabilties
+    % fprintf("%d %d\n", exe_counter, length(Nodes{1}));
+    % fprintf("%d\n", exe_counter);
+    %if exe_counter > 2
+        %disp(Nodes{1}(exe_counter));
+        %disp(LiveNodes(exe_counter));
+    %end
+    % fprintf("%s %f\n\n", Rules.AllNames{1}(1), Nodes{1}(exe_counter - 1).CreationTime);
+    
     [updated_Rules] = updating_fcn(Rules, T(exe_counter), X(exe_counter,:));
     Rules = updated_Rules;
     Rules.Rates = cell2mat(cellfun(@(x) (x.Probs*x.Rate), Rules.Prod,'UniformOutput',false));
