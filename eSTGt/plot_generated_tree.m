@@ -33,7 +33,7 @@ tHand = tree_plot(tr,colors,0,'BranchLabels','false','group',group_names,'displa
 hl = findobj(hIcons, 'Type', 'Line');
 set(hl,'LineWidth',3); % set the line width to 3
 % fix the line color so that it matches with the color used in tree
-for i=1:length(list)-1
+for i=1:length(list_group_names)
     set(hl(i*2-1), 'Color', list(i+1,:));
 end
 
